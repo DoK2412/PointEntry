@@ -1,0 +1,17 @@
+from fastapi import Query
+from pydantic import BaseModel
+
+class Registration(BaseModel):
+    name: str = Query(description='Имя пользователя')
+    password: str = Query(description='Пароль пользователя')
+    confirmPassword: str = Query(description='Подтверждение пароля пользователя')
+    email: str = Query(description="Электронная почта пользователя")
+
+class ConfirmRegistration(BaseModel):
+    username: str = Query(description='Имя пользователя')
+    password_hash: str = Query(description='Пароль пользователя')
+    user_email: str = Query(description="Электронная почта пользователя")
+
+class Login(BaseModel):
+    name: str = Query(description='Имя пользователя')
+    password: str = Query(description='Пароль пользователя')
