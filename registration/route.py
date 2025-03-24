@@ -3,7 +3,7 @@ from idlelib.query import Query
 from fastapi import APIRouter, Request, Depends, Response, Query
 
 from path import *
-from registration.madel_request import Registration, Login
+from registration.model_request import Registration, Login
 from registration.views import (registration_user,
                                 confirm_registration_user, login, profile)
 
@@ -30,13 +30,12 @@ async def post_confirmation_register(request: Request,
     return result
 
 @registration.post(LOGIN)
-async def get_login(user: Login):
-    result = await login(user)
+async def get_login(user: Login, request: Request, response: Response):
+    result = await login(user, request, response)
     return result
 
 @registration.get(PROFILE, dependencies=[Depends(cookie)])
 async def get_profile(session_data: SessionData = Depends(verifier)):
-    print(session_data)
     result = await profile(session_data)
     return result
 
